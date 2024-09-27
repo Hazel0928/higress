@@ -118,6 +118,13 @@ func onHttpResponseHeader(ctx wrapper.HttpContext, grayConfig config.GrayConfig,
 		return types.ActionContinue
 	}
 
+	// 当 grayConfig.Html 不为空时
+	if grayConfig.Html != "" {
+		// 设置状态码为200
+		proxywasm.ReplaceHttpResponseHeader(":status", "200")
+		proxywasm.ReplaceHttpResponseHeader("Content-Type", "text/html") // 设置 Content-Type
+	}
+
 	status, err := proxywasm.GetHttpResponseHeader(":status")
 	if grayConfig.Rewrite != nil && grayConfig.Rewrite.Host != "" {
 		// 删除Content-Disposition，避免自动下载文件
@@ -200,7 +207,7 @@ func onHttpResponseBody(ctx wrapper.HttpContext, grayConfig config.GrayConfig, b
 
 		newHtml := util.InjectContent(grayConfig.Html, grayConfig.Injection)
 		// 替换当前html加载的动态文件版本
-		newHtml = strings.ReplaceAll(newHtml, "{version}", frontendVersion)
+		newHtml = strings.ReplaceAll(newHtml, "${version}", frontendVersion)
 
 		// 最终替换响应体
 		if err := proxywasm.ReplaceHttpResponseBody([]byte(newHtml)); err != nil {
