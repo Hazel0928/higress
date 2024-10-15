@@ -5,9 +5,10 @@ import (
 	"math/rand"
 	"strings"
 
-	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
 	"github.com/higress-group/proxy-wasm-go-sdk/proxywasm/types"
 	"github.com/tidwall/gjson"
+
+	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
 )
 
 type ApiName string
@@ -20,6 +21,7 @@ const (
 	providerTypeMoonshot   = "moonshot"
 	providerTypeAzure      = "azure"
 	providerTypeAi360      = "ai360"
+	providerTypeGithub     = "github"
 	providerTypeQwen       = "qwen"
 	providerTypeOpenAI     = "openai"
 	providerTypeGroq       = "groq"
@@ -40,6 +42,7 @@ const (
 	providerTypeMistral    = "mistral"
 	providerTypeCohere     = "cohere"
 	providerTypeDoubao     = "doubao"
+	providerTypeCoze       = "coze"
 
 	protocolOpenAI   = "openai"
 	protocolOriginal = "original"
@@ -78,6 +81,7 @@ var (
 		providerTypeMoonshot:   &moonshotProviderInitializer{},
 		providerTypeAzure:      &azureProviderInitializer{},
 		providerTypeAi360:      &ai360ProviderInitializer{},
+		providerTypeGithub:     &githubProviderInitializer{},
 		providerTypeQwen:       &qwenProviderInitializer{},
 		providerTypeOpenAI:     &openaiProviderInitializer{},
 		providerTypeGroq:       &groqProviderInitializer{},
@@ -98,6 +102,7 @@ var (
 		providerTypeMistral:    &mistralProviderInitializer{},
 		providerTypeCohere:     &cohereProviderInitializer{},
 		providerTypeDoubao:     &doubaoProviderInitializer{},
+		providerTypeCoze:       &cozeProviderInitializer{},
 	}
 )
 
